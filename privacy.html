@@ -1,0 +1,494 @@
+﻿<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>개인정보처리방침</title>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
+
+    :root{
+      --bg: #f6fbff;
+      --card: #ffffff;
+      --text: #10223a;
+      --muted: #5e728c;
+      --line: #d9e6f3;
+      --primary: #1677c6;
+      --primary2: #1aa6a1;
+      --pill: #eef6ff;
+      --shadow: 0 12px 30px rgba(16,34,58,.08);
+      --radius: 16px;
+    }
+
+    body{
+      margin: 0;
+      background: linear-gradient(180deg, #f0f8ff 0%, var(--bg) 40%, #ffffff 100%);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Apple SD Gothic Neo", "Noto Sans KR", Arial, sans-serif;
+      line-height: 1.7;
+      word-break: keep-all;
+    }
+
+    a{ color: var(--primary); }
+    a:hover{ color: color-mix(in srgb, var(--primary) 70%, var(--primary2)); }
+
+    header{
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(246, 251, 255, .85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    header .inner{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand{
+      display:flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+    .title{
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -0.2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .sub{
+      color: var(--muted);
+      font-size: 12px;
+      display:flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items:center;
+    }
+    .badge{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--pill), #eefbf9);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      max-width: 100%;
+    }
+    .spacer{ flex: 1; }
+
+    .btn{
+      border: 1px solid var(--line);
+      background: #ffffff;
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 13px;
+      box-shadow: 0 6px 16px rgba(16,34,58,.06);
+      white-space: nowrap;
+    }
+    .btn:hover{
+      border-color: color-mix(in srgb, var(--primary) 30%, var(--line));
+      transform: translateY(-1px);
+    }
+
+    /* 레이아웃 */
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 18px 16px 72px;
+      width: 100%;
+      overflow-x: clip; /* 일부 브라우저 대응 */
+    }
+
+    .grid{
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 16px;
+      margin-top: 14px;
+      width: 100%;
+      min-width: 0;
+    }
+    @media (max-width: 860px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      width: 100%;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    /* 목차 */
+    .toc{
+      position: sticky;
+      top: 92px;
+      max-height: calc(100vh - 120px);
+      overflow: auto;
+    }
+    @media (max-width: 860px){
+      .toc{
+        position: static;
+        max-height: none;
+      }
+    }
+
+    .toc h3{
+      margin: 0 0 10px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+    .toc a{
+      display: block;
+      text-decoration: none;
+      color: var(--text);
+      padding: 9px 10px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      font-size: 14px;
+      line-height: 1.35;
+      overflow-wrap: anywhere; /* 긴 텍스트 줄바꿈 */
+    }
+    .toc a:hover{
+      border-color: var(--line);
+      background: linear-gradient(90deg, #f3f9ff, #f1fffe);
+    }
+    .toc a small{ color: var(--muted); }
+
+    .links{
+      display:flex;
+      gap:10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .links a{ text-decoration:none; }
+    .footer{
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .note{ color: var(--muted); font-size: 13px; }
+
+    /* Markdown 본문 */
+    #content{
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+    #content h1{
+      font-size: 26px;
+      margin: 0 0 10px;
+      letter-spacing: -0.3px;
+    }
+
+    /* 아코디언(기본 전체 펼침) */
+    details.section{
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      margin: 12px 0;
+      overflow: hidden;
+      background: #ffffff;
+    }
+    details.section summary{
+      cursor: pointer;
+      list-style: none;
+      padding: 14px 14px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      user-select: none;
+      background: linear-gradient(90deg, #f3f9ff, #f1fffe);
+      border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+    }
+    details.section summary::-webkit-details-marker{ display:none; }
+    .chev{
+      width: 10px; height: 10px;
+      border-right: 2px solid color-mix(in srgb, var(--primary) 55%, var(--muted));
+      border-bottom: 2px solid color-mix(in srgb, var(--primary) 55%, var(--muted));
+      transform: rotate(-45deg);
+      transition: transform .15s ease;
+      margin-top: 2px;
+      flex: 0 0 auto;
+    }
+    details[open] .chev{ transform: rotate(45deg); }
+
+    .secTitle{
+      font-weight: 900;
+      letter-spacing: -0.2px;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .secMeta{
+      margin-left: auto;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .secBody{
+      padding: 0 14px 14px;
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    #content p{ margin: 10px 0; }
+    #content ul, #content ol{ padding-left: 22px; margin: 10px 0; }
+    #content li{ margin: 6px 0; }
+
+    #content code{
+      padding: 2px 6px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f6fbff;
+      word-break: break-word;
+    }
+    #content hr{
+      border: 0;
+      border-top: 1px solid var(--line);
+      margin: 18px 0;
+    }
+
+    /* 표: 모바일에서 가로 스크롤은 '표 내부'에서만 */
+    #content table{
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      display: block;
+      max-width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      background: #fff;
+    }
+    #content thead{
+      background: linear-gradient(90deg, #eef6ff, #eefdff);
+    }
+    #content th, #content td{
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      font-size: 14px;
+      white-space: normal; /* 줄바꿈 허용 */
+      overflow-wrap: anywhere;
+    }
+    #content tr:last-child td{ border-bottom: 0; }
+
+	.preface-box{
+	  border: 1px solid var(--line);
+	  border-radius: 14px;
+	  padding: 14px;
+	  margin: 12px 0 16px;
+	  background: linear-gradient(90deg, #f3f9ff, #f1fffe);
+	  box-shadow: 0 8px 18px rgba(16,34,58,.06);
+	}
+
+	.preface-box p:first-child{ margin-top: 0; }
+	.preface-box p:last-child{ margin-bottom: 0; }
+    /* 긴 URL/식별자 줄바꿈 */
+    .break-anywhere{ overflow-wrap:anywhere; word-break: break-word; }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="inner">
+      <div class="brand">
+        <div class="title">개인정보처리방침</div>
+        <div class="sub">
+          <span class="badge">중앙치매센터</span>
+          <span class="badge">위치기반서비스 포함</span>
+        </div>
+      </div>
+      <div class="spacer"></div>
+
+      <!-- 검색/인쇄 제거, 최소 버튼만
+      <button class="btn" id="btnTop" type="button">맨 위</button>
+       -->
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="grid">
+      <aside class="card toc" aria-label="목차">
+        <h3>목차</h3>
+        <nav id="toc"></nav>
+
+        <div class="links">
+        <!--
+          <a class="btn" href="./privacy.md" download>현재 버전(MD)</a>
+          <a class="btn" href="./privacy-previous.md" download>개정 전(MD)</a>
+        -->
+        </div>
+      </aside>
+
+      <section class="card" aria-label="본문">
+        <div id="content">
+          <p class="note">문서를 불러오는 중…</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    function slugify(text){
+      return (text || "")
+        .trim()
+        .toLowerCase()
+        .replace(/[^\u3131-\u318E\uAC00-\uD7A3a-z0-9\s-]/g, "")
+        .replace(/\s+/g, "-")
+        .replace(/-+/g, "-");
+    }
+    function escapeHtml(s){
+      return (s || "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+    async function fetchText(path){
+      const res = await fetch(path, { cache: "no-store" });
+      if(!res.ok) throw new Error(path + "를 불러올 수 없습니다.");
+      return await res.text();
+    }
+
+	function wrapSections(contentEl){
+	  const children = Array.from(contentEl.children);
+
+	  // 1) h1(제목) 보관
+	  const h1 = children.find(el => el.tagName.toLowerCase() === "h1");
+	  const h1Clone = h1 ? h1.cloneNode(true) : null;
+
+	  // 2) 첫 h2(제1조) 이전 요소들을 preface로 수집
+	  const preface = [];
+	  const sections = [];
+	  let current = null;
+
+	  children.forEach(el => {
+		const tag = el.tagName.toLowerCase();
+		if(tag === "h1") return;
+
+		if(tag === "h2"){
+		  current = { title: el.textContent.trim(), body: [] };
+		  sections.push(current);
+		} else {
+		  if(!current) preface.push(el);
+		  else current.body.push(el);
+		}
+	  });
+
+	  // 3) 재구성
+	  contentEl.innerHTML = "";
+	  if(h1Clone) contentEl.appendChild(h1Clone);
+
+	  // 타이틀 없는 네모 박스(아코디언 적용 X)
+	  if(preface.length){
+		const box = document.createElement("div");
+		box.className = "preface-box";
+		preface.forEach(el => box.appendChild(el));
+		contentEl.appendChild(box);
+	  }
+
+	  // 4) 목차/섹션(제1조~) 아코디언 구성
+	  const toc = document.getElementById("toc");
+	  toc.innerHTML = "";
+	  const used = new Map();
+
+	  function makeId(title, fallback){
+		const base = slugify(title || fallback);
+		const count = (used.get(base) || 0) + 1;
+		used.set(base, count);
+		return count === 1 ? base : `${base}-${count}`;
+	  }
+
+	  sections.forEach((sec, idx) => {
+		const id = makeId(sec.title, "section-" + (idx+1));
+
+		const details = document.createElement("details");
+		details.className = "section";
+		details.open = true; // 기본 전체 펼침
+
+		const summary = document.createElement("summary");
+		summary.innerHTML = `
+		  <span class="chev" aria-hidden="true"></span>
+		  <span class="secTitle">${escapeHtml(sec.title)}</span>
+		  <span class="secMeta">클릭하여 접기</span>
+		`;
+		details.appendChild(summary);
+
+		const body = document.createElement("div");
+		body.className = "secBody";
+		body.id = id;
+		sec.body.forEach(el => body.appendChild(el));
+
+		details.appendChild(body);
+		contentEl.appendChild(details);
+
+		details.addEventListener("toggle", () => {
+		  const meta = summary.querySelector(".secMeta");
+		  if(meta) meta.textContent = "클릭하여 " + (details.open ? "접기" : "펼치기");
+		});
+
+		// 목차(h2)
+		const a = document.createElement("a");
+		a.href = `#${id}`;
+		a.textContent = sec.title;
+		toc.appendChild(a);
+
+		// (선택) h3도 목차
+		body.querySelectorAll("h3").forEach(h3 => {
+		  const t3 = h3.textContent.trim();
+		  const id3 = makeId(t3, "sub");
+		  h3.id = id3;
+
+		  const a3 = document.createElement("a");
+		  a3.href = `#${id3}`;
+		  a3.innerHTML = `<small>${escapeHtml(t3)}</small>`;
+		  a3.style.marginLeft = "12px";
+		  toc.appendChild(a3);
+		});
+	  });
+	}
+
+    async function init(){
+      marked.setOptions({ gfm: true, breaks: true });
+
+      const md = await fetchText("./privacy.md");
+      const html = marked.parse(md);
+
+      const content = document.getElementById("content");
+      content.innerHTML = html;
+
+      wrapSections(content);
+
+      //document.getElementById("btnTop").addEventListener("click", () =>
+      //  window.scrollTo({ top: 0, behavior: "smooth" })
+      //);
+    }
+
+    init().catch(err => {
+      document.getElementById("content").innerHTML =
+        `<p class="note">오류: ${err.message}</p>
+         <p class="note">같은 폴더에 <code>privacy.md</code>가 있는지 확인하세요.</p>`;
+    });
+  </script>
+</body>
+</html>
